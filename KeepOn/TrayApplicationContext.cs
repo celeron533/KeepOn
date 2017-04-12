@@ -11,6 +11,7 @@ namespace KeepOn
     public class TrayApplicationContext : ApplicationContext
     {
         private NotifyIcon trayIcon;
+        private AboutBox aboutBox = new AboutBox();
 
         public TrayApplicationContext()
         {
@@ -49,7 +50,8 @@ namespace KeepOn
 
         void About(object sender, EventArgs e)
         {
-            new AboutBox().ShowDialog();
+            if (!aboutBox.Visible)
+                aboutBox.ShowDialog();
         }
 
 
