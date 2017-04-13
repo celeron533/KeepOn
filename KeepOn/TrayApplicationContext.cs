@@ -37,6 +37,9 @@ namespace KeepOn
             }),
                 Visible = true
             };
+
+            trayIcon.BalloonTipText = trayIcon.Text;
+            trayIcon.ShowBalloonTip(3000);
         }
 
 
