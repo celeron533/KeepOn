@@ -1,6 +1,8 @@
 ﻿using KeepOn.Properties;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
@@ -15,12 +17,18 @@ namespace KeepOn
         private Config config = new Config();
         private ContextMenu trayMenu;
 
+        private Icon appIcon, grayAppIcon;
+
         private MenuItem EnableItem;
         private MenuItem AboutItem;
         private MenuItem ExitItem;
 
         public TrayApplicationContext()
         {
+            // Initialize icons
+            appIcon = Resources.AppIcon;
+            grayAppIcon = Icon.FromHandle(MakeGrayscale(appIcon.ToBitmap()).GetHicon());
+
             SetState(config);
             InitMenu();
 
@@ -30,11 +38,10 @@ namespace KeepOn
                 UnsetState();
             };
 
-
             // Initialize tray icon
             trayIcon = new NotifyIcon()
             {
-                Icon = Resources.AppIcon,
+                Icon = appIcon,
                 Text = "'KeepOn' is running",
                 ContextMenu = trayMenu,
                 Visible = true
@@ -42,6 +49,8 @@ namespace KeepOn
 
             trayIcon.BalloonTipText = trayIcon.Text;
             trayIcon.ShowBalloonTip(3000);
+
+            RefreshUI();
         }
 
         void InitMenu()
@@ -51,19 +60,19 @@ namespace KeepOn
                          AboutItem = new MenuItem("About", About_Clicked),
                          ExitItem = new MenuItem("Exit", Exit_Clicked)
             });
-            RefreshMenu();
         }
 
-        void RefreshMenu()
+        void RefreshUI()
         {
             EnableItem.Checked = config.isEnable;
+            trayIcon.Icon = EnableItem.Checked ? appIcon : grayAppIcon;
         }
 
         void Enable_Clicked(object sender, EventArgs e)
         {
             config.isEnable = !config.isEnable;
             SetState(config);
-            RefreshMenu();
+            RefreshUI();
         }
 
         void About_Clicked(object sender, EventArgs e)
@@ -96,6 +105,36 @@ namespace KeepOn
         EXECUTION_STATE UnsetState()
         {
             return SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS);
+        }
+
+
+        Bitmap MakeGrayscale(Bitmap original)
+        {
+            // Create a blank bitmap the same size as original
+            Bitmap newBitmap = new Bitmap(original.Width, original.Height);
+            Graphics g = Graphics.FromImage(newBitmap);
+
+            // Create the grayscale ColorMatrix
+            // https://msdn.microsoft.com/en-us/library/system.drawing.imaging.colormatrix.aspx
+            ColorMatrix colorMatrix = new ColorMatrix(
+               new float[][]
+               {
+                new float[] {.3f, .3f, .3f, 0, 0},
+                new float[] {.59f, .59f, .59f, 0, 0},
+                new float[] {.11f, .11f, .11f, 0, 0},
+                new float[] {0, 0, 0, 1, 0},
+                new float[] {0, 0, 0, 0, 1}
+               });
+
+            ImageAttributes attributes = new ImageAttributes();
+            attributes.SetColorMatrix(colorMatrix);
+
+            // Draw the original image on the new image using the grayscale color matrix
+            g.DrawImage(original, new Rectangle(0, 0, original.Width, original.Height),
+               0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
+
+            g.Dispose();
+            return newBitmap;
         }
     }
 }
