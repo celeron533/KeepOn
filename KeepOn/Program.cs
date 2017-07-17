@@ -17,18 +17,26 @@ namespace KeepOn
             bool hasUnknowArgs = false;
             foreach (string arg in args)
             {
-                // /lang=zh_CN
-                if (arg.StartsWith("/lang"))
+                try
                 {
-                    I18N.overrideLanguage = arg.Split('=')[1].Trim();
+                    // /lang=zh_CN
+                    if (arg.StartsWith("/lang"))
+                    {
+                        I18N.overrideLanguage = arg.Split('=')[1].Trim();
+                    }
+                    else
+                        hasUnknowArgs = true;
                 }
-                else
+                catch
+                {
                     hasUnknowArgs = true;
+                }
             }
             if (hasUnknowArgs)
                 MessageBox.Show(
-@"/lang=zh_CN
-/lang=en_US"
+@"Set UI language:
+  /lang=zh_CN
+  /lang=en_US"
 ,
             "Available arguments");
 
