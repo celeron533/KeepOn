@@ -1,0 +1,12 @@
+﻿#Translation file for Simplified Chinese
+# App
+app.name=KeepOn
+app.trayIconText="KeepOn" 正在运行
+app.dupInstanceMsg="{0}" 已经运行
+# Menu
+menu.enable=启用
+menu.about=关于
+menu.exit=退出
+# About
+about.about=关于 {0}
+about.version=版本 {0}

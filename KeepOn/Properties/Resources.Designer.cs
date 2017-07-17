@@ -69,5 +69,35 @@ namespace KeepOn.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # Translation file for English
+        ///# App
+        ///app.name=KeepOn
+        ///app.trayIconText=&apos;KeepOn&apos; is running
+        ///app.dupInstanceMsg=&quot;{0}&quot; is already running
+        ///# Menu
+        ///menu.enable
+        ///menu.about
+        ///menu.exit
+        ///# About
+        ///about.about=About {0}
+        ///about.version=Version {0}.
+        /// </summary>
+        internal static string en_US {
+            get {
+                return ResourceManager.GetString("en_US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #Translation file for Simplified Chinese
+        ///.
+        /// </summary>
+        internal static string zh_CN {
+            get {
+                return ResourceManager.GetString("zh_CN", resourceCulture);
+            }
+        }
     }
 }

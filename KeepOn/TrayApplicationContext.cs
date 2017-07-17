@@ -42,11 +42,12 @@ namespace KeepOn
             trayIcon = new NotifyIcon()
             {
                 Icon = appIcon,
-                Text = "'KeepOn' is running",
+                Text = I18N.GetString("app.trayIconText"),
                 ContextMenu = trayMenu,
                 Visible = true
             };
 
+            trayIcon.BalloonTipTitle = I18N.GetString("app.name");
             trayIcon.BalloonTipText = trayIcon.Text;
             trayIcon.ShowBalloonTip(3000);
 
@@ -56,9 +57,9 @@ namespace KeepOn
         void InitMenu()
         {
             trayMenu = new ContextMenu(new MenuItem[] {
-                         EnableItem = new MenuItem("Enable", Enable_Clicked),
-                         AboutItem = new MenuItem("About", About_Clicked),
-                         ExitItem = new MenuItem("Exit", Exit_Clicked)
+                         EnableItem = new MenuItem(I18N.GetString("menu.enable"), Enable_Clicked),
+                         AboutItem = new MenuItem(I18N.GetString("menu.about"), About_Clicked),
+                         ExitItem = new MenuItem(I18N.GetString("menu.exit"), Exit_Clicked)
             });
         }
 
@@ -87,7 +88,6 @@ namespace KeepOn
             trayIcon.Visible = false;
             Application.Exit();
         }
-
 
         EXECUTION_STATE SetState(Config config)
         {

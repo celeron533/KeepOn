@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace KeepOn
@@ -11,14 +12,33 @@ namespace KeepOn
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
+            bool hasUnknowArgs = false;
+            foreach (string arg in args)
+            {
+                // /lang=zh_CN
+                if (arg.StartsWith("/lang"))
+                {
+                    I18N.overrideLanguage = arg.Split('=')[1].Trim();
+                }
+                else
+                    hasUnknowArgs = true;
+            }
+            if (hasUnknowArgs)
+                MessageBox.Show(
+@"/lang=zh_CN
+/lang=en_US"
+,
+            "Available arguments");
+
+            I18N.Init();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             bool createdNew;
             // To prevent the program to be started twice
-            System.Threading.Mutex appMutex = new System.Threading.Mutex(true, Application.ProductName, out createdNew);
+            Mutex appMutex = new Mutex(true, Application.ProductName, out createdNew);
             if (createdNew)
             {
                 Application.Run(new TrayApplicationContext());
@@ -26,7 +46,7 @@ namespace KeepOn
             }
             else
             {
-                string msg = String.Format("\"{0}\" is already running", Application.ProductName);
+                string msg = string.Format(I18N.GetString("app.dupInstanceMsg"), Application.ProductName);
                 MessageBox.Show(msg, Application.ProductName,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

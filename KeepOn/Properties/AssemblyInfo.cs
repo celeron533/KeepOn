@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("KeepOn")]
-[assembly: AssemblyDescription("This tool prevents Windows to auto lock or run the screensaver. \r\nUseful when the system policy / group policy does not allow user to change the power settings.")]
+[assembly: AssemblyDescription("This tool prevents Windows to run the screensaver, auto lock or sleep.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("https://github.com/celeron533")]
 [assembly: AssemblyProduct("KeepOn")]

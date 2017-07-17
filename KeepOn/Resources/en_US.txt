@@ -1,0 +1,12 @@
+﻿# Translation file for English
+# App
+app.name=KeepOn
+app.trayIconText="KeepOn" is running
+app.dupInstanceMsg="{0}" is already running
+# Menu
+menu.enable=Enable
+menu.about=About
+menu.exit=Exit
+# About
+about.about=About {0}
+about.version=Version {0}
