@@ -1,7 +1,7 @@
 # KeepOn
-This tool is preventing Windows to auto lock or run the screensaver.
-
-:octocat: Pull requests are welcome.
+This tool is preventing Windows to auto lock or run the screensaver.\
+:octocat: Pull requests are welcome.\
+[![Github All Releases](https://img.shields.io/github/downloads/celeron533/KeepOn/total.svg)]()
 
 # Requirement
 .Net Framework 4.0+
@@ -12,4 +12,4 @@ Set UI language by adding argument `/lang`:
 - `/lang=en_US` US English
 
 # License
-MIT License ([details](LICENSE))
+[MIT License](./LICENSE)
